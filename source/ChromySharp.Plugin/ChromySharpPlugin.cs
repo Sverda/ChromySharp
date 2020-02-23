@@ -10,7 +10,7 @@ namespace ChromySharp.Plugin
     {
         private IPluginHost _pluginHost;
         private ICatItemFactory _catFactory;
-        private IEnumerable<(string name, string url)> _bookmarks;
+        private IEnumerable<Bookmark> _bookmarks;
         private const string _pluginName = "ChromeBookmarksPlugin";
 
         public void init(IPluginHost pluginHost)
@@ -36,23 +36,24 @@ namespace ChromySharp.Plugin
 
         public void getResults(List<IInputData> inputDataList, List<ICatItem> resultsList)
         {
-            if (!inputDataList.Any(i => _bookmarks.Any(b => b.name == i.getText())))
+            if (!inputDataList.Any(i => _bookmarks.Any(b => b.Name == i.getText())))
             {
                 return;
             }
 
-            var urlNamePairs = _bookmarks.Where(b => inputDataList.Any(i => i.getText() == b.name));
-            resultsList.AddRange(urlNamePairs.Select(pair => _catFactory.createCatItem(pair.url, pair.name, getID(), getName())));
+            var urlNamePairs = _bookmarks.Where(b => inputDataList.Any(i => i.getText() == b.Name));
+            //TODO: Use icon downloaded from url
+            resultsList.AddRange(urlNamePairs.Select(pair => _catFactory.createCatItem(pair.Url, pair.Name, getID(), getName())));
         }
 
         public void getCatalog(List<ICatItem> catalogItems)
         {
-            catalogItems.AddRange(_bookmarks.Select(pair => _catFactory.createCatItem(pair.url, pair.name, getID(), getName())));
+            catalogItems.AddRange(_bookmarks.Select(pair => _catFactory.createCatItem(pair.Url, pair.Name, getID(), getName())));
         }
 
         public void launchItem(List<IInputData> inputDataList, ICatItem item)
         {
-            ICatItem catItem = inputDataList[inputDataList.Count - 1].getTopResult();
+            var catItem = inputDataList[inputDataList.Count - 1].getTopResult();
             MessageBox.Show("I was asked to launch: " + item.getFullPath());
         }
 
