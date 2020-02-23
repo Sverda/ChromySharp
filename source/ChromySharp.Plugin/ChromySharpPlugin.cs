@@ -1,6 +1,7 @@
 ﻿using LaunchySharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ChromySharp.Plugin
@@ -9,12 +10,14 @@ namespace ChromySharp.Plugin
     {
         private IPluginHost _pluginHost;
         private ICatItemFactory _catFactory;
+        private IEnumerable<(string name, string url)> _bookmarks;
         private const string _pluginName = "ChromeBookmarksPlugin";
 
         public void init(IPluginHost pluginHost)
         {
             _pluginHost = pluginHost;
             _catFactory = _pluginHost?.catItemFactory();
+            _bookmarks = BookmarksReader.GetBookmarks();
         }
 
         public uint getID()
@@ -33,11 +36,18 @@ namespace ChromySharp.Plugin
 
         public void getResults(List<IInputData> inputDataList, List<ICatItem> resultsList)
         {
-            resultsList.Add(_catFactory.createCatItem("Hello World!", "SimplePlugin", getID(), getName()));
+            if (!inputDataList.Any(i => _bookmarks.Any(b => b.name == i.getText())))
+            {
+                return;
+            }
+
+            var urlNamePairs = _bookmarks.Where(b => inputDataList.Any(i => i.getText() == b.name));
+            resultsList.AddRange(urlNamePairs.Select(pair => _catFactory.createCatItem(pair.url, pair.name, getID(), getName())));
         }
 
         public void getCatalog(List<ICatItem> catalogItems)
         {
+            catalogItems.AddRange(_bookmarks.Select(pair => _catFactory.createCatItem(pair.url, pair.name, getID(), getName())));
         }
 
         public void launchItem(List<IInputData> inputDataList, ICatItem item)

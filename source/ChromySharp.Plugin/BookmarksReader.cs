@@ -8,7 +8,7 @@ namespace ChromySharp.Plugin
 {
     internal class BookmarksReader
     {
-        public IEnumerable<(string name, string url)> GetBookmarks()
+        public static IEnumerable<(string name, string url)> GetBookmarks()
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var bookmarksFilePath = Path.Combine(appData, @"Google\Chrome\User Data\Default\Bookmarks");
