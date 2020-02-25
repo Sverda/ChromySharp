@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bookmark.cs" />
+    <Compile Include="BookmarkSaver.cs" />
     <Compile Include="BookmarksReader.cs" />
     <Compile Include="ChromySharpPlugin.cs" />
     <Compile Include="IconLoader.cs" />

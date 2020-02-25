@@ -14,7 +14,7 @@
             Url = url;
         }
 
-        public string GetDefaultIconPath()
+        public string GetIconUrl()
         {
             string iconPath;
             if (Url.EndsWith("/"))
@@ -27,6 +27,12 @@
             }
 
             return iconPath;
+        }
+
+        public string GetIconPath(BookmarkSaver bookmarkSaver)
+        {
+            bookmarkSaver.SaveIconToFile(this);
+            return bookmarkSaver.BookmarkIconFilePath(this);
         }
     }
 }

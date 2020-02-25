@@ -10,6 +10,7 @@ namespace ChromySharp.Plugin
         private IPluginHost _pluginHost;
         private ICatItemFactory _catFactory;
         private IEnumerable<Bookmark> _bookmarks;
+        private BookmarkSaver _bookmarksSaver;
         private const string _pluginName = "ChromySharp";
 
         public void init(IPluginHost pluginHost)
@@ -17,6 +18,7 @@ namespace ChromySharp.Plugin
             _pluginHost = pluginHost;
             _catFactory = _pluginHost?.catItemFactory();
             _bookmarks = BookmarksReader.GetBookmarks();
+            _bookmarksSaver = new BookmarkSaver(_pluginHost?.launchyPaths());
         }
 
         public uint getID()
@@ -40,14 +42,13 @@ namespace ChromySharp.Plugin
                 return;
             }
 
-            var urlNamePairs = _bookmarks.Where(b => inputDataList.Any(i => i.getText() == b.Name));
-            //TODO: Use icon downloaded from url
-            resultsList.AddRange(urlNamePairs.Select(pair => _catFactory.createCatItem(pair.Url, pair.Name, getID(), getName())));
+            var bookmarks = _bookmarks.Where(b => inputDataList.Any(i => i.getText() == b.Name));
+            resultsList.AddRange(bookmarks.Select(b => _catFactory.createCatItem(b.Url, b.Name, getID(), b.GetIconPath(_bookmarksSaver))));
         }
 
         public void getCatalog(List<ICatItem> catalogItems)
         {
-            catalogItems.AddRange(_bookmarks.Select(pair => _catFactory.createCatItem(pair.Url, pair.Name, getID(), getName())));
+            catalogItems.AddRange(_bookmarks.Select(b => _catFactory.createCatItem(b.Url, b.Name, getID(), b.GetIconPath(_bookmarksSaver))));
         }
 
         public void launchItem(List<IInputData> inputDataList, ICatItem item)
