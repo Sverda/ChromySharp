@@ -10,7 +10,7 @@ namespace ChromySharp.Plugin
         private IPluginHost _pluginHost;
         private ICatItemFactory _catFactory;
         private IEnumerable<Bookmark> _bookmarks;
-        private const string _pluginName = "ChromeBookmarksPlugin";
+        private const string _pluginName = "ChromySharp";
 
         public void init(IPluginHost pluginHost)
         {
