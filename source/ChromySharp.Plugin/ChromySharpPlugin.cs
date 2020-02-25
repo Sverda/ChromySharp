@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace ChromySharp.Plugin
 {
@@ -54,7 +53,7 @@ namespace ChromySharp.Plugin
         public void launchItem(List<IInputData> inputDataList, ICatItem item)
         {
             var catItem = inputDataList[inputDataList.Count - 1].getTopResult();
-            MessageBox.Show("I was asked to launch: " + item.getFullPath());
+            System.Diagnostics.Process.Start(item.getFullPath());
         }
 
         public bool hasDialog()
