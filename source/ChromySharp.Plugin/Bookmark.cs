@@ -32,7 +32,7 @@
         public string GetIconPath(BookmarkSaver bookmarkSaver)
         {
             bookmarkSaver.SaveIconToFile(this);
-            return bookmarkSaver.BookmarkIconFilePath(this);
+            return bookmarkSaver.BookmarkIconLocalPath(this);
         }
     }
 }

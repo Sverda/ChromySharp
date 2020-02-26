@@ -15,10 +15,10 @@ namespace ChromySharp.Plugin
             var html = web.Load(bookmark.Url);
             var node = html.DocumentNode.SelectSingleNode("/html/head/link[@rel='icon' and @href]")
                        ?? html.DocumentNode.SelectSingleNode("/html/head/link[@rel='shortcut icon' and @href]")
-                       ?? html.DocumentNode.SelectSingleNode("/html/head/link[@rel='SHORTCUT ICON' and @href]")
-                       ?? throw new ArgumentNullException("node", "Icon node has not been found");
+                       ?? html.DocumentNode.SelectSingleNode("/html/head/link[@rel='SHORTCUT ICON' and @href]");
 
-            var favicon = node.Attributes["href"].Value;
+            var favicon = node is null ? bookmark.GetIconUrl() : node.Attributes["href"].Value;
+            favicon = RemoveOverlappingBackslash(bookmark, favicon);
 
             var request = WebRequest.Create(favicon);
             var response = request.GetResponse();
@@ -31,6 +31,21 @@ namespace ChromySharp.Plugin
                 memoryStream.Position = 0;
                 bookmark.Icon = memoryStream.ToArray();
             }
+        }
+
+        private static string RemoveOverlappingBackslash(Bookmark bookmark, string favicon)
+        {
+            if (!favicon.StartsWith("/"))
+            {
+                return favicon;
+            }
+
+            if (bookmark.Url.EndsWith("/"))
+            {
+                favicon = favicon.TrimStart('/');
+            }
+
+            return $"{bookmark.Url}{favicon}";
         }
     }
 }

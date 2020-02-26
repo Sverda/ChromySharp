@@ -18,15 +18,15 @@ namespace ChromySharp.Plugin
             try
             {
                 IconLoader.LoadFromUrl(bookmark);
-                var iconPath = BookmarkIconFilePath(bookmark);
+                var iconPath = BookmarkIconLocalPath(bookmark);
                 File.WriteAllBytes(iconPath, bookmark.Icon);
             }
-            catch (ArgumentNullException)
+            catch (Exception)
             {
             }
         }
 
-        public string BookmarkIconFilePath(Bookmark bookmark) => Path.Combine(BookmarksIconsPath, $"{bookmark.Name}.ico");
+        public string BookmarkIconLocalPath(Bookmark bookmark) => Path.Combine(BookmarksIconsPath, $"{bookmark.Name}.ico");
 
         private string BookmarksIconsPath => Path.Combine(_launchyPaths.getIconsPath(), "bookmarks");
     }
