@@ -25,6 +25,7 @@ namespace ChromySharp.Plugin
             catch (Exception)
             {
             }
+            IconConverter.ConvertIconToPngFormat(Icon);
             bookmarkSaver.SaveIconToFile(this);
             return bookmarkSaver.BookmarkIconLocalPath(this);
         }
