@@ -33,7 +33,7 @@ namespace ChromySharp.Plugin
                 memoryStream.Position = 0;
                 bookmark.Icon = new Icon
                 {
-                    FileName = $"{bookmark.Name}.{faviconUrl.GetExtension()}",
+                    FileName = $"{bookmark.Name}{faviconUrl.GetExtension()}",
                     Data = memoryStream.ToArray()
                 };
             }
