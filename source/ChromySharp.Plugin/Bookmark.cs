@@ -1,4 +1,6 @@
-﻿namespace ChromySharp.Plugin
+﻿using System;
+
+namespace ChromySharp.Plugin
 {
     internal class Bookmark
     {
@@ -6,7 +8,7 @@
 
         public string Url { get; set; }
 
-        public byte[] Icon { get; set; }
+        public Icon Icon { get; set; }
 
         public Bookmark(string name, string url)
         {
@@ -14,23 +16,15 @@
             Url = url;
         }
 
-        public string GetIconUrl()
-        {
-            string iconPath;
-            if (Url.EndsWith("/"))
-            {
-                iconPath = $"{Url}favicon.ico";
-            }
-            else
-            {
-                iconPath = $"{Url}/favicon.ico";
-            }
-
-            return iconPath;
-        }
-
         public string GetIconPath(BookmarkSaver bookmarkSaver)
         {
+            try
+            {
+                IconDownloader.DownloadFromUrl(this);
+            }
+            catch (Exception)
+            {
+            }
             bookmarkSaver.SaveIconToFile(this);
             return bookmarkSaver.BookmarkIconLocalPath(this);
         }

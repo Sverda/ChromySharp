@@ -1,5 +1,4 @@
 ﻿using LaunchySharp;
-using System;
 using System.IO;
 
 namespace ChromySharp.Plugin
@@ -15,18 +14,16 @@ namespace ChromySharp.Plugin
 
         public void SaveIconToFile(Bookmark bookmark)
         {
-            try
+            if (bookmark.Icon is null)
             {
-                IconLoader.LoadFromUrl(bookmark);
-                var iconPath = BookmarkIconLocalPath(bookmark);
-                File.WriteAllBytes(iconPath, bookmark.Icon);
+                return;
             }
-            catch (Exception)
-            {
-            }
+
+            var iconPath = BookmarkIconLocalPath(bookmark);
+            File.WriteAllBytes(iconPath, bookmark.Icon.Data);
         }
 
-        public string BookmarkIconLocalPath(Bookmark bookmark) => Path.Combine(BookmarksIconsPath, $"{bookmark.Name}.ico");
+        public string BookmarkIconLocalPath(Bookmark bookmark) => Path.Combine(BookmarksIconsPath, $"{bookmark.Icon.FileName}");
 
         private string BookmarksIconsPath => Path.Combine(_launchyPaths.getIconsPath(), "bookmarks");
     }
