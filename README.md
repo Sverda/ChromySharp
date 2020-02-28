@@ -2,8 +2,8 @@
 
 ChromySharp is plugin written for [Launchy](https://www.launchy.net/). It allows you to use Launchy's search engine to index your Google Chrome's bookmarks with capability to display its icons in Launchy's search results. 
 
-![Chrome Bookmarks][chrome.png]
-![Launchy Search][launchy.png]
+![Chrome Bookmarks][https://github.com/Sverda/ChromySharp/blob/master/img/chrome.png]
+![Launchy Search][https://github.com/Sverda/ChromySharp/blob/master/img/launchy.png]
 
 ## Getting Started
 
