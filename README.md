@@ -7,9 +7,10 @@ ChromySharp is plugin written for [Launchy](https://www.launchy.net/). It allows
 
 ## Getting Started
 
-1. Copy Dlls to Launchy's plugin folder: _C:\Program Files (x86)\Launchy\plugins_
-2. Create _bookmarks_ folder in _icons_ folder: _C:\Program Files (x86)\Launchy\plugins\icons_
-3. _Rescan Catalogs_ in options
+1. Install _LaunchySharp_ from [here](https://github.com/randrey/launchysharp/releases/tag/v1.3) by copying binaries to Launchy's folder: _C:\Program Files (x86)\Launchy_
+2. Copy Dlls to Launchy's plugin folder: _C:\Program Files (x86)\Launchy\plugins_
+3. Create _bookmarks_ folder in _icons_ folder: _C:\Program Files (x86)\Launchy\plugins\icons_
+4. _Rescan Catalogs_ in options
 
 ## Prerequisites
 
