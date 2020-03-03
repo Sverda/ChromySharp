@@ -21,13 +21,15 @@ namespace ChromySharp.Plugin
             try
             {
                 IconDownloader.DownloadFromUrl(this);
+                IconConverter.ConvertIconToPngFormat(Icon);
+                bookmarkSaver.SaveIconToFile(this);
+                return bookmarkSaver.BookmarkIconLocalPath(this);
             }
             catch (Exception)
             {
             }
-            IconConverter.ConvertIconToPngFormat(Icon);
-            bookmarkSaver.SaveIconToFile(this);
-            return bookmarkSaver.BookmarkIconLocalPath(this);
+
+            return string.Empty;
         }
     }
 }
